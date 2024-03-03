@@ -6,8 +6,20 @@ void main() {
   ));
 }
 
-class TaskBoard extends StatelessWidget {
+class TaskBoard extends StatefulWidget {
   const TaskBoard({Key? key}) : super(key: key);
+
+  @override
+  _TaskBoardState createState() => _TaskBoardState();
+}
+
+class _TaskBoardState extends State<TaskBoard> {
+  List<TaskItem> tasks = [
+    TaskItem('Task 1', 'Your Personal task management...'),
+    TaskItem('Task 2', 'Your Personal task management...'),
+    TaskItem('Task 3', 'Your Personal task management...'),
+    TaskItem('Task 4', 'Your Personal task management...'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +32,7 @@ class TaskBoard extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-              children: [
-                TaskItem('Task 1', 'Your Personal task management...'),
-                TaskItem('Task 2', 'Your Personal task management...'),
-                TaskItem('Task 3', 'Your Personal task management...'),
-                TaskItem('Task 4', 'Your Personal task management...'),
-              ],
+              children: tasks,
             ),
           ),
           Container(
@@ -33,10 +40,9 @@ class TaskBoard extends StatelessWidget {
             color: Colors.blue,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SecondPage()),
-                );
+                setState(() {
+                  tasks.add(TaskItem('New Task', 'New task description'));
+                });
               },
               child: const Text('Let\'s get started'),
             ),
@@ -70,27 +76,6 @@ class TaskItem extends StatelessWidget {
           const SizedBox(height: 10),
           Text('12:55 pm 25th May, 2023'),
         ],
-      ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Task'),
-      ),
-      body: Center(
-        child: const Text('Second Page Content'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add functionality to add more items to the list
-          // For example, you can use a TextEditingController to get user input.
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
